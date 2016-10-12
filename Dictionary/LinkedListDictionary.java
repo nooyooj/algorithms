@@ -1,176 +1,216 @@
-import edu.gwu.algtest.*;
 import java.util.*;
 import java.lang.*;
 
-public class LinkedListDictionary implements StringDictionaryAlgorithm
+class TreeNode extends ComparableKeyValuePair
 {
-	public String getName(){return "LinkedListDictionary by Jooyoon Byun";}
-	public void setPropertyExtractor(int algID,edu.gwu.util.PropertyExtractor prop){}
+	TreeNode left;
+	TreeNode right;
+	TreeNode parent;
+}
 
+class ComparableKeyValuePair
+{
+	Comparable key;
+	Object value;
+
+	ComparableKeyValuePair()
+	{
+		this.key = null;
+		this.value = null;
+	}
+
+	ComparableKeyValuePair(Comparable comparable, Object object)
+	{
+		this.key = comparable;
+		this.value = object;
+	}
+}
+
+public class LinkedListDictionary 
+{
 	public void clear()
 	{
-		ll.clear(); //clear() method will clear the LinkedList
+		ll.clear(); 
 	}
 	
-	static LinkedList<String> ll = new LinkedList<String>(); //creating linkedlist that will be used globally
+	static LinkedList<String> ll = new LinkedList<String>(); 
 	
-	public boolean insert(String key) //beginning of the insert method that will insert the key that is passed in as parameter
+	public boolean insert(String key)
 	{
-		boolean result = false; //initiate the result as false
+		boolean result = false;
 
-		if(!ll.contains(key)) //if the linkedlist ll doesn't contain "key", it means there is no such word in ll.
+		if(!ll.contains(key)) 
 		{
-			ll.add(key); //then we have to add a key into the linkedlist.
-			result = true; //true because we added the string into the linkedList above, so this becomes true
+			ll.add(key); 
+			result = true; 
 		}
 
-		else //if ll already contains that word, then, return false
+		else 
 		{
-			result = false; //return false
+			result = false; 
 		}
 		
-		return result; //returns the result either true or false
+		return result; 
 	}
 
-	public boolean delete(String key) //delete method will delete the string from the linked list
+	public boolean delete(String key) 
 	{
-		boolean result = false; //initiate this with false because we haven't checked something yet
+		boolean result = false; 
 
-		if(ll.contains(key)) //if ll contains the string meaning if there is a key matches in a string in a linked list
+		if(ll.contains(key)) 
 		{
-			result = true; //it means we can remove it. Therefore, true.
+			result = true;
 		
-			ll.remove(key); //remove the key
+			ll.remove(key);
 		}
 
-		else //if there is no word, it means we can't delete.
+		else 
 		{
-			result = false; //so result becomes false
+			result = false; 
 		}
 
-		return result; //return the result
+		return result; 
 	}
 
-	public boolean contains(String key) //contains method will check if the key is in the linkedlist
+	public boolean contains(String key) 
 	{
-		boolean result = false; //initiate with false
+		boolean result = false; 
 
-		if(ll.contains(key)) //if the linkedlist contains the key
+		if(ll.contains(key)) 
 		{
-			result = true; //then return true
+			result = true; 
 		}
 
-		else //if not,
+		else 
 		{
-			result = false; //return false
+			result = false; 
 		}
 
-		return result; //return the result. This result will be called in delete and insert methods above.
-	}
-
-	public String[] toSortedArray() //sorting the array. The assignment doesn't require toSortedArray() but I did this for fun
-	{
-		String[] result = ll.toArray(new String[ll.size()]);
-	
-		Arrays.sort(result);
-
-		return result;
+		return result; 
 	}
 
 	public static void main(String[] args)
 	{
 		LinkedListDictionary dict = new LinkedListDictionary();
 
+		System.out.println();
 		dict.insert("hello");
+		System.out.println("inserting \"hello\"...");
 		dict.insert("my");
+		System.out.println("inserting \"my\"...");
 		dict.insert("name");
+		System.out.println("inserting \"name\"...");
 		dict.insert("is");
-		dict.insert("eric");
+		System.out.println("inserting \"is\"...");
+		dict.insert("Jooyoon");
+		System.out.println("inserting \"Jooyoon\"...");
+		System.out.println();
 
+		System.out.println("checking \"hello\" in linked list...");
 		if(dict.contains("hello"))
 		{
-			System.out.println("contains hello = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains hello = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"hell\" in linked list...");
+		if(dict.contains("hell"))
+		{
+			System.out.println("true");
+		}
+		else
+		{
+			System.out.println("false");
+		}
+		
+		System.out.println("checking \"hllo\" in linked list...");
 		if(dict.contains("hllo"))
 		{
-			System.out.println("contains hllo = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains hllo = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"my\" in linked list...");
 		if(dict.contains("my"))
 		{
-			System.out.println("contains my = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains my = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"name\" in linked list...");
 		if(dict.contains("name"))
 		{
-			System.out.println("contains name = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains name = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"is\" in linked list...");
 		if(dict.contains("is"))
 		{
-			System.out.println("contains is = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains is = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"eric\" in linked list...");
 		if(dict.contains("eric"))
 		{
-			System.out.println("contains eric = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains eric = false");
+			System.out.println("false");
 		}
 
-		if(dict.contains("erii"))
+		System.out.println("checking \"Jooyoon\" in linked list...");
+		if(dict.contains("Jooyoon"))
 		{
-			System.out.println("contains erii = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains erii = false");
+			System.out.println("false");
 		}
 
-		dict.delete("hello");
+		System.out.println();
 		
-		System.out.println("after deleting hello");
-
+		System.out.println("deleting \"hello\" from linked list...");
+		dict.delete("hello");
+	
+		System.out.println();
+		System.out.println("checking \"hello\" in linked list...");
 		if(dict.contains("hello"))
 		{
-			System.out.println("contains hello = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains hello = false");
+			System.out.println("false");
 		}
+
+		System.out.println();
 	}
 
 }
+
+
 

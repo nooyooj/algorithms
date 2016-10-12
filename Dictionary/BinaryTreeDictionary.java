@@ -1,316 +1,347 @@
-import edu.gwu.algtest.*;
 import java.util.*;
 import java.lang.*;
 
-public class BinaryTreeDictionary implements StringDictionaryAlgorithm
+class TreeNode extends ComparableKeyValuePair
+{
+	TreeNode left;
+	TreeNode right;
+	TreeNode parent;
+}
+
+class ComparableKeyValuePair
+{
+	Comparable key;
+	Object value;
+
+	ComparableKeyValuePair()
+	{
+		this.key = null;
+		this.value = null;
+	}
+
+	ComparableKeyValuePair(Comparable comparable, Object object)
+	{
+		this.key = comparable;
+		this.value = object;
+	}
+}
+public class BinaryTreeDictionary 
 {
 	private TreeNode root;
 	
-	public String getName(){return "BinaryTreeDictionary";}
-	public void setPropertyExtractor(int algID,edu.gwu.util.PropertyExtractor prop){}
-
     public BinaryTreeDictionary()
     {
-        root = null; //initialize the Binary Tree, starting off with root is null
+        root = null; 
     }
 
     public void clear()
 	{
-	    root = null; //when we clear the tree, root becomes null meaning it is empty
+	    root = null; 
 	}
 	
-	private void insert(TreeNode root, TreeNode node, String key) //insert method will insert key into the tree recursively
+	private void insert(TreeNode root, TreeNode node, String key) 
 	{
-		TreeNode nodeLeft = new TreeNode(); //creating nodeLeft that will store key that will be stored into left of the node
-		TreeNode nodeRight = new TreeNode(); //creating nodeRight that will store key that will be stored into right of the node
+		TreeNode nodeLeft = new TreeNode(); 
+		TreeNode nodeRight = new TreeNode(); 
 
-	    if (root.left == null) //if left value of root is empty
+	    if(root.left == null) 
 		{
-	        node.left = nodeLeft; //it means nodeLeft will become left of the node
-			nodeLeft.key = key; //key that is passed in as parameter will be stored into left of the node
-			root.left = node; //it means left of the root is node
-	        node.parent = root; //parent becomes root because it just added a key into the node
+	        node.left = nodeLeft; 
+			nodeLeft.key = key; 
+			root.left = node; 
+	        node.parent = root; 
 	    }
 
-		else if(root.left != null) //if there is something in the left of root
+		else if(root.left != null) 
 		{
-			insert(root.left, node, key); //recursive occurs
+			insert(root.left, node, key); 
 		}
 
-	    else if (root.right == null) //if right of root is empty
+	    else if(root.right == null) 
 		{
-			node.right = nodeRight; //it will store nodeRight into right of node
-			nodeRight.key = key; //storing value into nodeRight
-	        root.right = node; //because root.right was null, so we insert node into root.right
-	        node.parent = root; //parent becomes root
+			node.right = nodeRight; 
+			nodeRight.key = key; 
+	        root.right = node; 
+	        node.parent = root; 
 	    }
 
-	    else if(root.right != null) //if null
+	    else if(root.right != null) 
 	    {
-	        insert(root.right, node,key); //recursive occurs
+	        insert(root.right, node,key); 
 	    }
 	}
 	
 	public boolean insert(String key)
 	{
-	    if(contains(key) == true) //if key is already in the tree
+	    if(contains(key) == true) 
 		{
-            return false; //then we can't add any value. So, return false
+            return false; 
         }
 
-		else //otherwise
+		else 
         {
-            TreeNode node = new TreeNode(); //we create a node
+            TreeNode node = new TreeNode(); 
             
-			node.key = key; //once we created node, that node's key will be the key that is passed in as parameter
+			node.key = key; 
             
-            if(root == null) //if root is empty
+            if(root == null) 
             {
-                root = node; //root becomes node because there has to be something in root
+                root = node; 
             }
         
-			else //if root is not empty
+			else 
             {
-                insert(root, node, key); //we insert
+                insert(root, node, key); 
             }
             
 			return true;
         }
 	}
 
-
-    private void delete(TreeNode node, String key) //delete will delete things in the tree
+    private void delete(TreeNode node, String key)
     {
-        if(node != null) //if node is not empty it means we can delete
+        if(node != null) 
         {
-            if(node.key.equals(key)) // match on the node itself
+            if(node.key.equals(key)) 
             {
-				System.out.println("test3");
-    
-				TreeNode nParent = node.parent; //creating parent
+				TreeNode nParent = node.parent; 
                 
-                if(node.left == null && node.right == null) //the case where left and right are both empty
+                if(node.left == null && node.right == null) 
                 {
-                    if(nParent.left == node) //but then, if left parent is empty
+                    if(nParent.left == node) 
                     {
-                        nParent.left = null; //set parent to null
+                        nParent.left = null; 
                     }
                  
-				 	else //if it is not
+				 	else 
                     {
-                        nParent.right = null; //set right to null
+                        nParent.right = null; 
                     }
                     
-                    node = null; //otherwise, node itself is null
+                    node = null; 
                 }
 
-                else if(node.left != null && node.right == null) //the case where left has value but right doesn't
+                else if(node.left != null && node.right == null) 
                 {
-                    TreeNode current = node.left; //so we go to the left and current becomes left
+                    TreeNode current = node.left; 
                    
-					if(nParent == null) //if parent is null
+					if(nParent == null) 
 					{
 							
 					}
 
-                    if(nParent.left == node) //if left matches with node it means left parent has to be current that stores node.left above
+                    if(nParent.left == node) 
                     {
-                        nParent.left = current; //current to left parent
-                        current.parent = nParent; //parent becomes current parent because we already added
+                        nParent.left = current; 
+                        current.parent = nParent; 
                     }
                 
-					else //otherwise
+					else 
                     {
-                        nParent.right = current; //current to right parent
+                        nParent.right = current; 
                         current.parent = nParent;
                     }
                     
-                    node = null; //otherwise, node is null
+                    node = null; 
                 }
 
-                else if(node.left == null && node.right != null) //the case where left is empty but there is something in right
+                else if(node.left == null && node.right != null) 
                 {
-                    TreeNode current2 = node.right; //current2 has node.right
+                    TreeNode current2 = node.right; 
                     
-                    if(nParent.right == node) //I did inversely as I did in the above case
+                    if(nParent.right == node) 
                     {
-                        nParent.right = current2; //like above case, if right parent matches with node then current is right parent
-                        current2.parent = nParent; //like above case, parent will be stored into current parent
+                        nParent.right = current2; 
+                        current2.parent = nParent; 
                     }
                     
-                    else //otherwise
+                    else 
                     {
-                        nParent.left = current2; //oppositely current will be stored into left parent
+                        nParent.left = current2; 
                         current2.parent = nParent;
                     }
                 }
             }
 
-            else //or
+            else 
             {
-                delete(node.left, key); //we just delete left noderecursively
-                delete(node.right, key); //we just delete right node recursively
+                delete(node.left, key); 
+                delete(node.right, key); 
             }
         }
     }
 
-    /*
-    Method delete should delete the the given string if 
-    it's already in the data structure. 
-    Return false if it's not there.
-    */
-    
 	public boolean delete(String key)
 	{
-		boolean canDelete = contains(key); //check if we can delete
+		boolean canDelete = contains(key); 
 		
-		if(!canDelete) // if not contains
+		if(!canDelete) 
 		{ 
-			return false; //return false meaning we can't delete
+			return false; 
 		}
 
-		if(root.key.equals(key)) //if root string equals key
+		if(root.key.equals(key)) 
 		{
-			root = root.left; //move root downward	
+			root = root.left; 
 		}
 
-        // otherwise we proceed ahead
-        delete(root, key); // search through the tree beginning at root
+        delete(root, key); 
         
 		return true;
 	}
 
     private boolean contains(TreeNode node, String key)
     {
-        if(node == null) //if node is empty
+        if(node == null) 
 		{
-			return false; //then return false
+			return false; 
 		}
 
-		if(node!=null) //if node is not null
+		if(node!=null) 
         {
-            if(node.key.equals(key)) //match on the node itself
+            if(node.key.equals(key)) 
             {
-                return true; //if matches return true
+                return true; 
             }
 
-            else //if not,
+            else 
             {
-                if(contains(node.left, key) || contains(node.right, key)) //we recursively check if nodes are acceptable
+                if(contains(node.left, key) || contains(node.right, key)) 
 				{
-                    return true; //if one of them are available, then true
+                    return true; 
 				}
             }
         }
 		
-        return false; //if any of above statements doesn't satisfy, we return false
+        return false; 
     }
     
-	public boolean contains(String key) //contains method checks if the tree contains the key
+	public boolean contains(String key) 
 	{
-		boolean result = contains(root, key); //go to the recursive contains above
+		boolean result = contains(root, key); 
 
-		return result; //return result
-	}
-
-	public String[] toSortedArray()
-	{
-		return null; //this method is not required for this assignment
+		return result; 
 	}
 
 	public static void main(String[] args)
 	{
 		BinaryTreeDictionary dict = new BinaryTreeDictionary();
 
+		System.out.println();
 		dict.insert("hello");
+		System.out.println("inserting \"hello\"...");
 		dict.insert("my");
+		System.out.println("inserting \"my\"...");
 		dict.insert("name");
+		System.out.println("inserting \"name\"...");
 		dict.insert("is");
-		dict.insert("eric");
+		System.out.println("inserting \"is\"...");
+		dict.insert("Jooyoon");
+		System.out.println("inserting \"Jooyoon\"...");
+		System.out.println();
 
+		System.out.println("checking \"hello\" in binary tree...");
 		if(dict.contains("hello"))
 		{
-			System.out.println("contains hello = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains hello = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"hell\" in binary tree...");
+		if(dict.contains("hell"))
+		{
+			System.out.println("true");
+		}
+		else
+		{
+			System.out.println("false");
+		}
+		
+		System.out.println("checking \"hllo\" in binary tree...");
 		if(dict.contains("hllo"))
 		{
-			System.out.println("contains hllo = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains hllo = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"my\" in binary tree...");
 		if(dict.contains("my"))
 		{
-			System.out.println("contains my = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains my = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"name\" in binary tree...");
 		if(dict.contains("name"))
 		{
-			System.out.println("contains name = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains name = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"is\" in binary tree...");
 		if(dict.contains("is"))
 		{
-			System.out.println("contains is = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains is = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"eric\" in binary tree...");
 		if(dict.contains("eric"))
 		{
-			System.out.println("contains eric = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains eric = false");
+			System.out.println("false");
 		}
 
-		if(dict.contains("erii"))
+		System.out.println("checking \"Jooyoon\" in binary tree...");
+		if(dict.contains("Jooyoon"))
 		{
-			System.out.println("contains erii = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains erii = false");
+			System.out.println("false");
 		}
 
-		dict.delete("hello");
+		System.out.println();
 		
-		System.out.println("after deleting hello");
-
+		System.out.println("deleting \"hello\" from binary tree...");
+		dict.delete("hello");
+	
+		System.out.println();
+		System.out.println("checking \"hello\" in binary tree...");
 		if(dict.contains("hello"))
 		{
-			System.out.println("contains hello = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains hello = false");
+			System.out.println("false");
 		}
+
+		System.out.println();
 	}
 }
 

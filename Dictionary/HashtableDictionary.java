@@ -1,176 +1,213 @@
-import edu.gwu.algtest.*;
 import java.util.*;
 import java.lang.*;
 
-public class HashtableDictionary implements StringDictionaryAlgorithm
+class TreeNode extends ComparableKeyValuePair
 {
+	TreeNode left;
+	TreeNode right;
+	TreeNode parent;
+}
 
-	public String getName(){return "HashtableDictionary by Jooyoon Byun";}
-	public void setPropertyExtractor(int algID,edu.gwu.util.PropertyExtractor prop){}
+class ComparableKeyValuePair
+{
+	Comparable key;
+	Object value;
 
+	ComparableKeyValuePair()
+	{
+		this.key = null;
+		this.value = null;
+	}
+
+	ComparableKeyValuePair(Comparable comparable, Object object)
+	{
+		this.key = comparable;
+		this.value = object;
+	}
+}
+public class HashtableDictionary
+{
 	public void clear()
 	{
-		ht.clear(); //clears the hashtable
+		ht.clear(); 
 	}
 	
-	static Hashtable<String, String> ht = new Hashtable<String, String>(); //creating a hashtable globally so I can use this in any methods
+	static Hashtable<String, String> ht = new Hashtable<String, String>(); 
 	
-	public boolean insert(String key) //inserting key into hashtable
+	public boolean insert(String key) 
 	{
-		boolean result = false; //initialize result with false
+		boolean result = false; 
 
-		if(!ht.contains(key)) //if the hashtable doesn't have key in the table
+		if(!ht.contains(key)) 
 		{
-			ht.put(key, key); //the it means we can put key string into the table
-			result = true; //result becomes true because we have to return true when we added a key
+			ht.put(key, key); 
+			result = true; 
 		}
 
-		else //otherwise
+		else 
 		{
-			result = false; //if hashtable already has that key, then don't add
+			result = false; 
 		}
 		
-		return result; //returning result
+		return result; 
 	}
 
-	public boolean delete(String key) //delete method will delete string from the hashtable
+	public boolean delete(String key) 
 	{
-		boolean result = false; //initializing result with false
+		boolean result = false; 
 
-		if(ht.contains(key)) //if the table contains the key, then it means there is a key that can be deleted.
+		if(ht.contains(key))
 		{
-			result = true; //therefore, result becomes true
-			ht.remove(key); //then it removed the key from table
+			result = true; 
+			ht.remove(key); 
 		}
 
-		else //otherwise
+		else 
 		{
-			result = false; //there is no key that can be removed, so result becomes false
+			result = false; 
 		}
 
-		return result; //returning result
+		return result; 
 	}
 
-	public boolean contains(String key) //contain method will return true if table contains key and false if table doesn't
+	public boolean contains(String key) 
 	{
-		boolean result = false; //result initialized to false
+		boolean result = false; 
 
-		if(ht.contains(key)) //if table contains key
+		if(ht.contains(key))
 		{
-			result = true; //then true
+			result = true; 
 		}
 
-		else //if table doesn't
+		else 
 		{
-			result = false; //result becomes false
+			result = false; 
 		}
 
-		return result; //returning result
-	}
-
-	public String[] toSortedArray() //sorting the array, but not required for this assignment
-	{
-		ArrayList<String> al = new ArrayList<String>(ht.values());	
-		String[] result = new String[al.size()];
-		result = al.toArray(result);
-
-		return result;
+		return result; 
 	}
 
 	public static void main(String[] args)
 	{
 		HashtableDictionary dict = new HashtableDictionary();
 
+		System.out.println();
 		dict.insert("hello");
+		System.out.println("inserting \"hello\"...");
 		dict.insert("my");
+		System.out.println("inserting \"my\"...");
 		dict.insert("name");
+		System.out.println("inserting \"name\"...");
 		dict.insert("is");
-		dict.insert("eric");
+		System.out.println("inserting \"is\"...");
+		dict.insert("Jooyoon");
+		System.out.println("inserting \"Jooyoon\"...");
+		System.out.println();
 
+		System.out.println("checking \"hello\" in hashtable...");
 		if(dict.contains("hello"))
 		{
-			System.out.println("contains hello = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains hello = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"hell\" in hashtable...");
+		if(dict.contains("hell"))
+		{
+			System.out.println("true");
+		}
+		else
+		{
+			System.out.println("false");
+		}
+		
+		System.out.println("checking \"hllo\" in hashtable...");
 		if(dict.contains("hllo"))
 		{
-			System.out.println("contains hllo = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains hllo = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"my\" in hashtable...");
 		if(dict.contains("my"))
 		{
-			System.out.println("contains my = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains my = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"name\" in hashtable...");
 		if(dict.contains("name"))
 		{
-			System.out.println("contains name = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains name = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"is\" in hashtable...");
 		if(dict.contains("is"))
 		{
-			System.out.println("contains is = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains is = false");
+			System.out.println("false");
 		}
 
+		System.out.println("checking \"eric\" in hashtable...");
 		if(dict.contains("eric"))
 		{
-			System.out.println("contains eric = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains eric = false");
+			System.out.println("false");
 		}
 
-		if(dict.contains("erii"))
+		System.out.println("checking \"Jooyoon\" in hashtable...");
+		if(dict.contains("Jooyoon"))
 		{
-			System.out.println("contains erii = true");
+			System.out.println("true");
 		}
-
 		else
 		{
-			System.out.println("contains erii = false");
+			System.out.println("false");
 		}
 
-		dict.delete("hello");
+		System.out.println();
 		
-		System.out.println("after deleting hello");
-
+		System.out.println("deleting \"hello\" from hashtable...");
+		dict.delete("hello");
+	
+		System.out.println();
+		System.out.println("checking \"hello\" in hashtable...");
 		if(dict.contains("hello"))
 		{
-			System.out.println("contains hello = true");
+			System.out.println("true");
 		}
 
 		else
 		{
-			System.out.println("contains hello = false");
+			System.out.println("false");
 		}
+
+		System.out.println();
 	}
 
 }
+
 
